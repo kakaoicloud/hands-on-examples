@@ -1,13 +1,13 @@
 # network
 variable public_network_cidr {
   type    = string
-  default = "172.16.0.0/20"
+  default = "${PUBLIC_NETWORK_CIDR}"
 }
 
 # key
 variable "sshkey" {
   type = string
-  default = "hands-on"
+  default = "${USER_ACCESS_KEY_NAME}"
 }
 
 # default
