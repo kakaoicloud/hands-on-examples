@@ -7,7 +7,7 @@ variable public_network_cidr {
 # key
 variable "sshkey" {
   type = string
-  default = "${USER_ACCESS_KEY_NAME}"
+  default = "${USER_KEY_PAIR_NAME}"
 }
 
 # default
