@@ -1,2 +1,9 @@
 # hands-on-examples
-카카오 i 클라우드 핸즈온 가이드 예제 모음 레포지터리입니다.
+
+
+
+## Install code
+
+```bash
+git clone -b ${BRANCH_NAME} https://github.com/kakaoicloud/hands-on-examples.git
+```
