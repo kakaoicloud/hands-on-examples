@@ -5,5 +5,5 @@
 ## Install code
 
 ```bash
-git clone -b ${BRANCH_NAME} https://github.com/kakaoicloud/hands-on-examples.git
+git clone -b docs/ike-gpu-monitor https://github.com/kakaoicloud/hands-on-examples.git
 ```
