@@ -5,5 +5,5 @@
 ## Install code
 
 ```bash
-git clone -b ${BRANCH_NAME} https://github.com/kakaoicloud/hands-on-examples.git
+curl -o install-bastion.sh https://raw.githubusercontent.com/kakaoicloud/hands-on-examples/docs/bastion-host/install-bastion.sh
 ```

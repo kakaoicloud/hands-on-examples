@@ -1,27 +1,26 @@
 #!/bin/bash
 
-sudo yum install -y yum-utils
+# install docker / docker-compose
 
-sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
-sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get update
+sudo apt-get -y install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo apt-get -y install docker-compose
 
-sudo curl -L \
-"https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" \
--o /usr/local/bin/docker-compose
+# run docker compose - nginx proxy manager
 
-sudo chmod +x /usr/local/bin/docker-compose
-sudo /usr/local/bin/docker-compose --version
-
-sudo systemctl enable docker
-sudo systemctl start docker
-
-
-# nginx proxy manager 설정 => 디렉토리 먼저 만들기
-sudo mkdir -p /data/proxy-manager
-
-cat << \EOF | sudo tee /data/proxy-manager/docker-compose.yml
+mkdir ~/nginx-proxy-manager
+cat << EOF > ~/nginx-proxy-manager/docker-compose.yaml
 version: "3"
 services:
   app:
@@ -48,7 +47,6 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
-
   db:
     image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
@@ -61,5 +59,4 @@ services:
       - ./data/mysql:/var/lib/mysql
 EOF
 
-sudo /usr/local/bin/docker-compose -f \
-/data/proxy-manager/docker-compose.yml up -d
+sudo docker-compose -f ~/nginx-proxy-manager/docker-compose.yaml up -d
